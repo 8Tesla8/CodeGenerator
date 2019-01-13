@@ -6,11 +6,14 @@ read settings from filename.txt
 ## commands
 // - skip line
 
+
 ### class name
 "name" : "MyClass"
 
+
 ### namespace
 "namespace" : "MyClass.Model"
+
 
 ### using
 "using" : "
@@ -23,9 +26,11 @@ using System.IO;
 using System;
 using System.IO;
 
+
 ### inherit
 "inherit": "Model, BaseModel"
 MyClass : Model, BaseModel
+
 
 ### constructors
 "ctor" : ""                          
@@ -37,6 +42,7 @@ private MyClass(int I, double d)
 "ctor" : "int I, double d"   
 public MyClass(int I, double d)
 
+
 ### base constructor
 "base-ctor": ""
 : base()
@@ -44,7 +50,9 @@ public MyClass(int I, double d)
 "base-ctor": "int i, double d"
 : base(int i, double d)
 
+
 ## files
+
 
 ### for model.txt 
 generate ClassName.cs and ClassNameDTO.cs
@@ -61,6 +69,7 @@ result:
 public VehicleId { get; set; }
 public VehicleNumber { get; set; }
 public VinNumber { get; set; }
+
 
 ### for repository.txt
 generate Repository.cs
