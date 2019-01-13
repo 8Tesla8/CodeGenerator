@@ -1,0 +1,16 @@
+
+{
+"name":"MyRep",
+"namespace":"Repositories",
+"inherit": "Model, BaseModel",
+"using": "System System.IO",
+"ctor": "int client",
+"base-ctor": "client",
+"method":"
+<Layer>> GetAll(); <LayerIcon>(GetCategoryIcons)/
+<Layer>> Get(int i); <LayerIcon>(GetIcons)/
+<Test>> Get(int i); <LayerIcon>(GetIcons)/
+
+"
+}
+

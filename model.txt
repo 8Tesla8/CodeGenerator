@@ -1,0 +1,23 @@
+
+{
+"name":"VehRequest",
+"namespace":"Dashboard.Dal.Model",
+"using": "System System.IO", 
+"prop":	"
+Vehicle_id
+Vehicle_number
+  Vin_number     
+Vehicle_type_descr "
+}
+
+{
+"name":"VehResponse",
+"namespace":"Dashboard.Dal.Model",
+"prop":"
+Group_name 
+Parent_group_name 
+current_vehicle_status_id 
+Current_driver_name
+"
+}
+

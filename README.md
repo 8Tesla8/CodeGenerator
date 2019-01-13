@@ -1,2 +1,2 @@
 # CodeGenerator
-Project allow generate code
+Project allows to create code
