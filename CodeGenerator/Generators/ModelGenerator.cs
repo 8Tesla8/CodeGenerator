@@ -18,21 +18,33 @@ namespace CodeGenerator.Generators
 
             foreach (var model in _generatorSettings.Models)
             {
+                // .net models
                 CreateClassFile(
-                    model.Settings[SettingsKeys.Name], 
+                    model.Settings[SettingsKeys.Name], "cs", 
                     GenarateModel(model, true));
 
 
                 model.Settings[SettingsKeys.Name] += "DTO";
 
                 CreateClassFile(
-                    model.Settings[SettingsKeys.Name], 
+                    model.Settings[SettingsKeys.Name], "cs",
+                    GenarateModel(model, false));
+
+
+                // TypeScript model
+                var className = model.Settings[SettingsKeys.Name];
+
+                model.Settings[SettingsKeys.Name] = char.ToLower(className[0]) + className.Substring(1);
+
+                CreateClassFile(
+                    model.Settings[SettingsKeys.Name], "ts",
                     GenarateModel(model));
             }
         }
 
+        #region .net model
 
-        private string GenarateModel(SettingsModel model, bool createJsonAttribute = false)
+        private string GenarateModel(SettingsModel model, bool createJsonAttribute)
         {
             string data = string.Empty;
 
@@ -89,7 +101,7 @@ namespace CodeGenerator.Generators
 
 
                 string propName = string.Empty;
-                foreach (var str in prop.Split(' '))
+                foreach (var str in prop.Split('_'))
                     propName += char.ToUpper(str[0]) + str.Substring(1);
 
                 properties.Add(propName);
@@ -97,6 +109,40 @@ namespace CodeGenerator.Generators
 
             return (properties, jsonAttributes);
         }
+
+        #endregion
+
+
+        #region TypeScript model
+
+        private string GenarateModel(SettingsModel model) 
+        {
+            string data = string.Empty;
+
+            data += "export class " + model.Settings[SettingsKeys.Name] + " {\n";
+
+
+            var properties = new List<string>();
+            foreach (var property in GenereteProperty(model.Settings))
+            {
+                var prop = property.ToLower().Split('_');
+
+                properties.Add(prop[0] + 
+                    char.ToUpper(prop[1][0]) // second [] take first letter
+                    + prop[1].Substring(1));
+            }
+
+            foreach(var property in properties) 
+            {
+                data += "\tpublic " + property + "?: string = null;\n";
+            }
+
+            data += "}";
+
+            return data;
+        }
+
+        #endregion
     }
 
 }

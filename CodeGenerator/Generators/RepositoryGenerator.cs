@@ -16,7 +16,7 @@ namespace CodeGenerator.Generators
             foreach (var model in _generatorSettings.Models)
             {
                 CreateClassFile(
-                    model.Settings[SettingsKeys.Name],
+                    model.Settings[SettingsKeys.Name], "cs",
                     GenereteRepository(model));
             }
         }

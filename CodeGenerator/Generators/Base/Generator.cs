@@ -26,11 +26,11 @@ namespace CodeGenerator.Generators
         }
 
         //create interface todo
-        protected void CreateClassFile(string fileName, string data)
+        protected void CreateClassFile(string fileName, string fileExtension, string data)
         {
             string directoryPath = _currentPath + "/Files/";
 
-            string path = directoryPath + fileName + ".cs";
+            string path = directoryPath + fileName + "." + fileExtension; 
 
             if (!Directory.Exists(directoryPath))
             {
