@@ -23,8 +23,13 @@ namespace CodeGenerator.Generators
                     model.Settings[SettingsKeys.Name], "cs", 
                     GenarateModel(model, true));
 
+                // DTO
 
+                //
                 model.Settings[SettingsKeys.Name] += "DTO";
+                if(model.Settings.ContainsKey(SettingsKeys.Inherit))
+                    model.Settings.Remove(SettingsKeys.Inherit);
+
 
                 CreateClassFile(
                     model.Settings[SettingsKeys.Name], "cs",
@@ -115,7 +120,7 @@ namespace CodeGenerator.Generators
 
         #region TypeScript model
 
-        private string GenarateModel(SettingsModel model) 
+        private string GenarateModel(SettingsModel model)
         {
             string data = string.Empty;
 
@@ -125,14 +130,23 @@ namespace CodeGenerator.Generators
             var properties = new List<string>();
             foreach (var property in GenereteProperty(model.Settings))
             {
+                if (!property.Contains('_'))
+                {
+                    properties.Add(
+                        char.ToUpper(property.ToLower()[0])
+                        + property.ToLower().Substring(1));
+
+                    continue;
+                }
+
                 var prop = property.ToLower().Split('_');
 
-                properties.Add(prop[0] + 
+                properties.Add(prop[0] +
                     char.ToUpper(prop[1][0]) // second [] take first letter
                     + prop[1].Substring(1));
             }
 
-            foreach(var property in properties) 
+            foreach (var property in properties)
             {
                 data += "\tpublic " + property + "?: string = null;\n";
             }
@@ -141,6 +155,7 @@ namespace CodeGenerator.Generators
 
             return data;
         }
+
 
         #endregion
     }
