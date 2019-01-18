@@ -13,6 +13,11 @@ namespace CodeGenerator.Settings
         public readonly static string Ctor = "ctor";
         public readonly static string BaseCtor = "base-ctor";
 
+        public readonly static string RepositoryTyle = "repoType";
+        public readonly static string ModelsDTO = "modelsDTO";
+
+        public readonly static string ClassAttribute = "clsAtr";
+
         public readonly static string Copy = "copy";
     }
 }

@@ -11,21 +11,26 @@ namespace CodeGenerator.Generators
         public ModelGenerator() : base()
         { }
 
-        //todo generate ts model
         public override void Generate()
         {
             _generatorSettings.ReadSettings("model");
 
             foreach (var model in _generatorSettings.Models)
             {
+                var nmSpace = model.Settings[SettingsKeys.Namespace].Split(';');
+
                 // .net models
+                model.Settings[SettingsKeys.Namespace] = nmSpace[0] + "Dal" + nmSpace[1];
+
                 CreateClassFile(
                     model.Settings[SettingsKeys.Name], "cs", 
                     GenarateModel(model, true));
+                //
+
 
                 // DTO
+                model.Settings[SettingsKeys.Namespace] = nmSpace[0] + "Api" + nmSpace[1];
 
-                //
                 model.Settings[SettingsKeys.Name] += "DTO";
                 if(model.Settings.ContainsKey(SettingsKeys.Inherit))
                     model.Settings.Remove(SettingsKeys.Inherit);
@@ -34,7 +39,7 @@ namespace CodeGenerator.Generators
                 CreateClassFile(
                     model.Settings[SettingsKeys.Name], "cs",
                     GenarateModel(model, false));
-
+                //
 
                 // TypeScript model
                 var className = model.Settings[SettingsKeys.Name];
@@ -57,8 +62,12 @@ namespace CodeGenerator.Generators
                 data += "using Newtonsoft.Json;\n";
             data += GenerateUsing(model.Settings) + "\n";
             
-
             data += GenerateNamespace(model.Settings) + "{\n";
+
+            if (createJsonAttribute) {
+                if(model.Settings.ContainsKey(SettingsKeys.ClassAttribute))
+                    data += "\t" + model.Settings[SettingsKeys.ClassAttribute] + "\n";
+            }
 
             data += "\t" + "public class " + GenerateName(model.Settings) 
                 + GenerateInherit(model.Settings) +  "\n\t{ \n";
@@ -71,6 +80,11 @@ namespace CodeGenerator.Generators
 
 
             var names = CreatePropertyNames(GenereteProperty(model.Settings));
+
+            if (createJsonAttribute) {
+                data += "\t\t[JsonIgnore] \n\t\t";
+                data += "public override int Id { get; set; }\n\n";
+            }
 
             for (int i = 0; i < names.properties.Count; i++)
             {

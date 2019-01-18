@@ -4,6 +4,7 @@ using CodeGenerator.Settings;
 
 namespace CodeGenerator.Generators
 {
+    //change that
     public class RepositoryGenerator : Generator
     {
         public RepositoryGenerator() : base()
