@@ -5,7 +5,9 @@ read settings from filename.txt
 
 ## commands
 // - skip line
-
+  
+### class attribute  
+"clsAtr" : "[Attribute = \"Attribute\"]"  
 
 ### class name
 "name" : "MyClass"  
@@ -21,7 +23,6 @@ System.IO"
 "using" : "System System.IO"  
 using System;  
 using System.IO;  
-
 
 ### inherit
 "inherit": "Model, BaseModel"  
@@ -67,32 +68,6 @@ public VehicleNumber { get; set; }
 public VinNumber { get; set; }  
 
 
-### for repository.txt 
-generate Repository.cs 
-name of methods   
-/ - is method separator  
-; - sepearator signature and body  
-
-example  
-"method" : "   
-method1 signature; method1 body/  
-method2 signature; method2 body/"  
-
-
-"method":"  
-int GetAll(); <LayerIcon>(GetCategoryIcons)/  
-void Put(int i); <LayerIcon>(GetIcons)/"   
-
-"method":"  
-int GetAll(); <Icon>(GetCategoryIcons)/  
-void Put(int i); <Icon>(GetIcons)/  
-
-result:  
-public int GetAll()  
-  <Icon>(GetCategoryIcons)  
-
-public void Put(int i)  
-  <Icon>(GetIcons)  
 
 
 ## example of settings in file
